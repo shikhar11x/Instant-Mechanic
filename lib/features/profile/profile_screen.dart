@@ -119,144 +119,213 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.horizontalPadding,
       ),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [const Color(0xFF2A2A2A), const Color(0xFF1F1F1F)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.shadow,
-                  blurRadius: 16,
-                  offset: const Offset(0, 8),
-                ),
-              ],
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.bgWhite,
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(
+            color: AppColors.borderColor.withValues(alpha: 0.55),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.045),
+              blurRadius: 24,
+              offset: const Offset(0, 10),
             ),
-            padding: const EdgeInsets.all(AppSpacing.md24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          ],
+        ),
+        child: Column(
+          children: [
+            Row(
               children: [
-                // Header Row with Avatar
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Avatar
-                    Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.bgLightOrange,
-                        border: Border.all(
-                          color: AppColors.primaryOrange,
-                          width: 2,
-                        ),
-                      ),
-                      child: Center(
-                        child: ClipOval(
-                          child: Image.network(
-                            'https://avatars.githubusercontent.com/u/142872564?v=4',
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.md16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Shikhar Bajpal',
-                            style: AppTextStyles.headingMedium.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: AppSpacing.xs4),
-                          Text(
-                            '${vehicles.length} Vehicles Registered',
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: Colors.white.withValues(alpha: 0.7),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.md20),
-
-                // Badge
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.md16,
-                    vertical: AppSpacing.xs6,
-                  ),
+                  width: 72,
+                  height: 72,
+                  padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(
+                    shape: BoxShape.circle,
                     color: AppColors.primaryOrange,
-                    borderRadius: BorderRadius.circular(AppSpacing.radiusSmall),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primaryOrange.withValues(alpha: 0.22),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
                   ),
-                  child: Text(
-                    '⭐ GOLD MEMBER',
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: Colors.white,
-                      letterSpacing: 0.8,
+                  child: ClipOval(
+                    child: Image.network(
+                      'https://avatars.githubusercontent.com/u/142872564?v=4',
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) {
+                        return Container(
+                          color: AppColors.bgLightOrange,
+                          child: Icon(
+                            Icons.person_rounded,
+                            color: AppColors.primaryOrange,
+                            size: 34,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.md20),
 
-                // Divider
-                Container(
-                  height: 1,
-                  color: Colors.white.withValues(alpha: 0.1),
+                const SizedBox(width: 14),
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Shikhar Bajpal',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.headingMedium.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textDark,
+                        ),
+                      ),
+
+                      const SizedBox(height: 5),
+
+                      Text(
+                        '${vehicles.length} vehicles registered',
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.bgLightOrange,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          'GOLD MEMBER',
+                          style: AppTextStyles.captionSmall.copyWith(
+                            color: AppColors.primaryOrange,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.7,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: AppSpacing.md20),
 
-                // Stats Row
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildStatItem('4.9', 'Rating'),
-                    _buildStatItem('128', 'Services'),
-                    _buildStatItem('₹28K', 'Total Spent'),
-                  ],
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: _showEditProfileDialog,
+                    borderRadius: BorderRadius.circular(14),
+                    child: Ink(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: AppColors.bgLightOrange,
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Icon(
+                        Icons.edit_outlined,
+                        color: AppColors.primaryOrange,
+                        size: 21,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-          // Edit Button (Top Right)
-          Positioned(
-            top: 16,
-            right: 16,
-            child: GestureDetector(
-              onTap: _showEditProfileDialog,
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryOrange,
-                  shape: BoxShape.circle,
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.edit_outlined,
-                    color: Colors.white,
-                    size: 20,
+
+            const SizedBox(height: 20),
+
+            Container(
+              height: 1,
+              color: AppColors.borderColor.withValues(alpha: 0.5),
+            ),
+
+            const SizedBox(height: 18),
+
+            Row(
+              children: [
+                Expanded(
+                  child: _buildPremiumProfileStat(
+                    value: '4.9',
+                    label: 'Rating',
+                    icon: Icons.star_rounded,
                   ),
                 ),
-              ),
+
+                Container(
+                  height: 42,
+                  width: 1,
+                  color: AppColors.borderColor.withValues(alpha: 0.5),
+                ),
+
+                Expanded(
+                  child: _buildPremiumProfileStat(
+                    value: '128',
+                    label: 'Services',
+                    icon: Icons.build_outlined,
+                  ),
+                ),
+
+                Container(
+                  height: 42,
+                  width: 1,
+                  color: AppColors.borderColor.withValues(alpha: 0.5),
+                ),
+
+                Expanded(
+                  child: _buildPremiumProfileStat(
+                    value: '₹28K',
+                    label: 'Spent',
+                    icon: Icons.account_balance_wallet_outlined,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildPremiumProfileStat({
+    required String value,
+    required String label,
+    required IconData icon,
+  }) {
+    return Column(
+      children: [
+        Icon(icon, size: 19, color: AppColors.primaryOrange),
+
+        const SizedBox(height: 6),
+
+        Text(
+          value,
+          style: AppTextStyles.bodyMedium.copyWith(
+            fontWeight: FontWeight.w800,
+            color: AppColors.textDark,
+          ),
+        ),
+
+        const SizedBox(height: 2),
+
+        Text(
+          label,
+          style: AppTextStyles.captionSmall.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+      ],
     );
   }
 
@@ -554,31 +623,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
     required Color color,
   }) {
     return Container(
-      padding: const EdgeInsets.all(AppSpacing.md16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.bgWhite,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-        border: Border.all(color: AppColors.borderColor, width: 1),
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(
+          color: AppColors.borderColor.withValues(alpha: 0.45),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.025),
+            blurRadius: 14,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 50,
-            height: 50,
+            width: 46,
+            height: 46,
             decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.15),
-              shape: BoxShape.circle,
+              color: color.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(14),
             ),
-            child: Center(
-              child: Icon(icon, color: color, size: AppSpacing.iconMedium),
+            child: Icon(icon, color: color, size: 22),
+          ),
+
+          const SizedBox(height: 18),
+
+          Text(
+            value,
+            style: AppTextStyles.headingMedium.copyWith(
+              fontWeight: FontWeight.w800,
+              color: AppColors.textDark,
             ),
           ),
-          const SizedBox(height: AppSpacing.md12),
-          Text(value, style: AppTextStyles.headingSmall.copyWith(color: color)),
-          const SizedBox(height: AppSpacing.xs4),
+
+          const SizedBox(height: 4),
+
           Text(
             label,
-            style: AppTextStyles.captionSmall.copyWith(
+            style: AppTextStyles.captionMedium.copyWith(
               color: AppColors.textSecondary,
             ),
           ),
@@ -634,83 +721,312 @@ class _ProfileScreenState extends State<ProfileScreen> {
         : AppColors.warningYellow;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: AppSpacing.md12),
-      padding: const EdgeInsets.all(AppSpacing.md16),
+      margin: const EdgeInsets.only(bottom: 14),
       decoration: BoxDecoration(
         color: AppColors.bgWhite,
-        borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-        border: Border.all(color: AppColors.borderColor, width: 1),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: AppColors.borderColor.withValues(alpha: 0.5)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.025),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    vehicle['name'],
-                    style: AppTextStyles.bodyMedium.copyWith(
+      child: Padding(
+        padding: const EdgeInsets.all(17),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    color: AppColors.bgLightOrange,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Icon(
+                    Icons.directions_car_filled_rounded,
+                    color: AppColors.primaryOrange,
+                    size: 26,
+                  ),
+                ),
+
+                const SizedBox(width: 13),
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        vehicle['name'],
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textDark,
+                        ),
+                      ),
+
+                      const SizedBox(height: 4),
+
+                      Text(
+                        vehicle['number'],
+                        style: AppTextStyles.captionMedium.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 7,
+                  ),
+                  decoration: BoxDecoration(
+                    color: healthColor.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    vehicle['health'],
+                    style: AppTextStyles.captionSmall.copyWith(
+                      color: healthColor,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.xs4),
-                  Text(
-                    vehicle['number'],
-                    style: AppTextStyles.captionMedium.copyWith(
-                      color: AppColors.textSecondary,
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 16),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              decoration: BoxDecoration(
+                color: AppColors.bgWarmWhite,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _buildVehicleInfo(
+                      icon: Icons.calendar_today_outlined,
+                      label: 'Year',
+                      value: '${vehicle['year']}',
+                    ),
+                  ),
+
+                  Container(height: 30, width: 1, color: AppColors.borderColor),
+
+                  Expanded(
+                    child: _buildVehicleInfo(
+                      icon: Icons.speed_outlined,
+                      label: 'Mileage',
+                      value: '${vehicle['mileage']} km',
                     ),
                   ),
                 ],
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm12,
-                  vertical: AppSpacing.xs6,
-                ),
-                decoration: BoxDecoration(
-                  color: healthColor.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(AppSpacing.radiusSmall),
-                ),
-                child: Text(
-                  vehicle['health'],
-                  style: AppTextStyles.captionSmall.copyWith(
-                    color: healthColor,
-                    fontWeight: FontWeight.w600,
+            ),
+
+            const SizedBox(height: 14),
+
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(14),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 11,
+                    horizontal: 14,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.bgLightOrange,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'View Vehicle Details',
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.primaryOrange,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+
+                      const SizedBox(width: 6),
+
+                      Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 17,
+                        color: AppColors.primaryOrange,
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.md12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Year: ${vehicle['year']}',
-                style: AppTextStyles.captionMedium.copyWith(
-                  color: AppColors.textSecondary,
-                ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVehicleInfo({
+    required IconData icon,
+    required String label,
+    required String value,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, size: 16, color: AppColors.primaryOrange),
+
+        const SizedBox(width: 7),
+
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: AppTextStyles.captionSmall.copyWith(
+                color: AppColors.textSecondary,
               ),
-              Text(
-                'Mileage: ${vehicle['mileage']} km',
-                style: AppTextStyles.captionMedium.copyWith(
-                  color: AppColors.textSecondary,
-                ),
+            ),
+
+            const SizedBox(height: 2),
+
+            Text(
+              value,
+              style: AppTextStyles.captionSmall.copyWith(
+                color: AppColors.textDark,
+                fontWeight: FontWeight.w700,
               ),
-            ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+  // Widget _buildVehicleCard(Map<String, dynamic> vehicle, int index) {}
+
+  Widget _buildMembershipCard() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.horizontalPadding,
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.primaryOrange,
+          borderRadius: BorderRadius.circular(26),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primaryOrange.withValues(alpha: 0.18),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.16),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: const Icon(
+                    Icons.workspace_premium_rounded,
+                    color: Colors.white,
+                    size: 25,
+                  ),
+                ),
+
+                const SizedBox(width: 13),
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Gold Membership',
+                        style: AppTextStyles.headingSmall.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+
+                      const SizedBox(height: 3),
+
+                      Text(
+                        'Your premium benefits',
+                        style: AppTextStyles.captionMedium.copyWith(
+                          color: Colors.white.withValues(alpha: 0.75),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
+            _buildPremiumBenefit(
+              Icons.percent_rounded,
+              '20% off on all services',
+            ),
+
+            _buildPremiumBenefit(Icons.bolt_rounded, 'Priority booking'),
+
+            _buildPremiumBenefit(
+              Icons.health_and_safety_outlined,
+              'Free annual vehicle checkup',
+            ),
+
+            _buildPremiumBenefit(
+              Icons.support_agent_rounded,
+              '24/7 customer support',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPremiumBenefit(IconData icon, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 13),
+      child: Row(
+        children: [
+          Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.16),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, size: 15, color: Colors.white),
           ),
-          const SizedBox(height: AppSpacing.md12),
-          GestureDetector(
-            onTap: () {
-              // View vehicle details
-            },
+
+          const SizedBox(width: 11),
+
+          Expanded(
             child: Text(
-              'View detailed report →',
+              text,
               style: AppTextStyles.bodySmall.copyWith(
-                color: AppColors.primaryOrange,
+                color: Colors.white,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -720,52 +1036,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildMembershipCard() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.horizontalPadding,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.bgLightOrange,
-          borderRadius: BorderRadius.circular(AppSpacing.radiusCard),
-          border: Border.all(
-            color: AppColors.primaryOrange.withValues(alpha: 0.3),
-            width: 1,
-          ),
-        ),
-        padding: const EdgeInsets.all(AppSpacing.md16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Your Membership Benefits',
-              style: AppTextStyles.headingSmall.copyWith(
-                color: AppColors.primaryOrange,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.md16),
-            _buildBenefitRow('✓ 20% off on all services'),
-            _buildBenefitRow('✓ Priority booking'),
-            _buildBenefitRow('✓ Free annual car checkup'),
-            _buildBenefitRow('✓ 24/7 customer support'),
-            _buildBenefitRow('✓ Service reminders'),
-            _buildBenefitRow('✓ Extended warranty options'),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBenefitRow(String text) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs8),
-      child: Text(
-        text,
-        style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
-      ),
-    );
-  }
+  // Widget _buildBenefitRow(String text) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs8),
+  //     child: Text(
+  //       text,
+  //       style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+  //     ),
+  //   );
+  // }
 
   Widget _buildMenuSection() {
     return Column(
@@ -841,38 +1120,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
     required String label,
     required VoidCallback onTap,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.horizontalPadding,
-          vertical: AppSpacing.md16,
-        ),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: AppColors.borderColor, width: 1),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AppSpacing.horizontalPadding,
+        right: AppSpacing.horizontalPadding,
+        bottom: 10,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(18),
+          child: Ink(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+            decoration: BoxDecoration(
+              color: AppColors.bgWhite,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(
+                color: AppColors.borderColor.withValues(alpha: 0.4),
+              ),
+            ),
+            child: Row(
               children: [
-                Icon(
-                  icon,
-                  color: AppColors.primaryOrange,
-                  size: AppSpacing.iconMedium,
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    color: AppColors.bgLightOrange,
+                    borderRadius: BorderRadius.circular(13),
+                  ),
+                  child: Icon(icon, color: AppColors.primaryOrange, size: 21),
                 ),
-                const SizedBox(width: AppSpacing.md16),
-                Text(label, style: AppTextStyles.bodyMedium),
+
+                const SizedBox(width: 14),
+
+                Expanded(
+                  child: Text(
+                    label,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textDark,
+                    ),
+                  ),
+                ),
+
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: AppColors.textSecondary,
+                  size: 22,
+                ),
               ],
             ),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: AppColors.textSecondary,
-              size: 16,
-            ),
-          ],
+          ),
         ),
       ),
     );
