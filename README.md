@@ -9,7 +9,7 @@
 <br/><br/>
 
 <img 
-  src="[https://cdn-icons-png.flaticon.com/512/10295/10295925.png](https://cdn.creativefabrica.com/2021/04/28/Work-In-Progress-Rubber-Stamp-Seal-Graphics-11432486-1.jpg)" 
+  src="https://cdn.creativefabrica.com/2021/04/28/Work-In-Progress-Rubber-Stamp-Seal-Graphics-11432486-1.jpg" 
   alt="Instant Mechanic App" 
   width="180"
 />
