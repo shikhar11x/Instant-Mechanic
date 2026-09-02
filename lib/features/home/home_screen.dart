@@ -13,7 +13,8 @@ import 'package:instant_mechanic/shared/widgets/mechanic_card.dart';
 import 'package:instant_mechanic/shared/widgets/search_bar_widget.dart';
 import 'package:instant_mechanic/shared/widgets/section_title.dart';
 import 'package:instant_mechanic/shared/widgets/service_card.dart';
-import 'package:instant_mechanic/shared/widgets/app_drawer.dart'; // ✅ ADD THIS IMPORT
+import 'package:instant_mechanic/shared/widgets/app_drawer.dart';
+import 'package:instant_mechanic/features/notifications/notifications_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<MechanicModel> _filteredMechanics;
   String _searchQuery = '';
   String _sortBy = 'recommended';
-  
+
   // ✅ ADD THIS GLOBAL KEY
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -171,10 +172,33 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  Icon(
-                    Icons.notifications_outlined,
-                    color: AppColors.textDark,
-                    size: AppSpacing.iconMedium,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NotificationsScreen(),
+                        ),
+                      );
+                    },
+                    child: Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        Icon(
+                          Icons.notifications_outlined,
+                          color: AppColors.textDark,
+                          size: AppSpacing.iconMedium,
+                        ),
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: AppColors.errorRed,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Container(
                     width: 8,
@@ -262,11 +286,21 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: CustomBottomNavigation(
-        currentIndex: _currentNavIndex,
+        currentIndex: 0,
         onTap: (index) {
-          setState(() {
-            _currentNavIndex = index;
-          });
+          switch (index) {
+            case 0:
+              break;
+            case 1:
+              context.push('/bookings');
+              break;
+            case 2:
+              context.push('/messages');
+              break;
+            case 3:
+              context.push('/profile');
+              break;
+          }
         },
         items: [
           BottomNavItem(icon: Icons.home_rounded, label: AppStrings.navHome),
